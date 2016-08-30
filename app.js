@@ -16,15 +16,14 @@ var authenticate = require('./routes/authenticate')(passport);
 var donation_api=require('./routes/donation_api');
 var mongoose = require('mongoose');
 
-
-mongoose.connect('mongodb://localhost/easyDonations', function(err){
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/easyDonations', function(err){
     // not getting printed on console
     if(err){
-        console.log("Connection refused");
+        console.log("Mongoose Connection refused");
         throw err;
     }
      else
-        console.log("connection successfull");  
+        console.log("Mongoose Connection successfull");  
 });
 
 var app = express();

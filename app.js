@@ -4,9 +4,28 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var session = require('express-session');
+var index = require('./routes/index');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+
+var orphanage_api=require('./routes/orphange_api');
+var donors_api = require('./routes/donors_api');
+var post_api  = require('./routes/post_api');
+var authenticate = require('./routes/authenticate')(passport);
+var donation_api=require('./routes/donation_api');
+var mongoose = require('mongoose');
+
+
+mongoose.connect('mongodb://localhost/easyDonations', function(err){
+    // not getting printed on console
+    if(err){
+        console.log("Connection refused");
+        throw err;
+    }
+     else
+        console.log("connection successfull");  
+});
 
 var app = express();
 
@@ -17,13 +36,28 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(session({   secret: 'secret'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/', routes);
-app.use('/users', users);
+// Initialize Passport
+var initPassport = require('./passport-init');
+initPassport(passport);
+
+app.use('/', index);
+
+app.use('/api', donors_api);
+app.use('/api', orphanage_api);
+//app.use('/auth', authenticate);
+
+app.use('/api', post_api);
+app.use('/auth', authenticate);
+
+app.use('/api',donation_api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

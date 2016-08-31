@@ -16,7 +16,10 @@ var authenticate = require('./routes/authenticate')(passport);
 var donation_api=require('./routes/donation_api');
 var mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/easyDonations', function(err){
+// Connection for localhost
+/*mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/easyDonations', function(err){*/
+// Connection for heroku DB
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://heroku_7bk1hwq1:puuhmk6rbp2a21kgfsf2utfbs1@ds019886.mlab.com:19886/heroku_7bk1hwq1', function(err){
     // not getting printed on console
     if(err){
         console.log("Mongoose Connection refused");

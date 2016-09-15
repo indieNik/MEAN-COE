@@ -131,7 +131,7 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 		}
 		donationFactory.insertPosts(postData).then(function (response){
                 $location.path("/home");
-                alert("You brought smile on some one face, THANK YOU !");
+                alert("You brought smile on someone's face, THANK YOU !");
 				console.log("Inserted Item : ");
 				console.log(response.data);
         }, function(error){

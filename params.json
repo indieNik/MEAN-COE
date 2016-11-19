@@ -1,0 +1,6 @@
+{
+  "name": "Mean-coe",
+  "tagline": "",
+  "body": "##Steps to Install and Run\r\n\r\n  - cd /\r\n\r\n  - git clone https://github.com/ritesh93kumar/MEAN-COE.git\r\n\r\n  - cd /MEAN-COE\r\n\r\n  - npm start\r\n\r\n  - Browse the app at **localhost:3000** in your Favorite Browser\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}

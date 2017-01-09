@@ -25,7 +25,7 @@ var orphanageSchema = new mongoose.Schema({
 var donationSchema = new mongoose.Schema({
 	donated_by: {type: Schema.Types.String, ref:'Donors'},
 	donated_to: {type: Schema.Types.String, ref:'Orphanages'},
-    donated_items: [ {item: String, quantity:Number} ],
+  donated_items: [ {item: String, quantity:Number} ],
 	donation_date: {type: Date, default: Date.now}
 });
 
@@ -36,14 +36,7 @@ var postSchema = new mongoose.Schema({
 	creation_date: {type: Date, default: Date.now},
     expiry_date: {type: Date, default: Date.now},
     updation_date: {type: Date, default: Date.now},
-    activated:{type: Boolean, default: true}
-});
-
-var claimSchema = new mongoose.Schema({
-	claimed_by: [ {type: Schema.Types.String, ref:'Orphanages'} ],
-	posted_by: {type: Schema.Types.String, ref:'Donors'},
-	creation_date: {type: Date, default: Date.now},
-  updation_date: {type: Date, default: Date.now}
+    activated:{type: Boolean}
 });
 
 var loginSchema = new mongoose.Schema({
@@ -59,4 +52,3 @@ mongoose.model('Orphanages', orphanageSchema);
 mongoose.model('Donations', donationSchema);
 mongoose.model('Posts', postSchema);
 mongoose.model('Login', loginSchema);
-mongoose.model('Claims', claimSchema);

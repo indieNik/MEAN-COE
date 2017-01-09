@@ -180,8 +180,8 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 			});
         }
     };
-		
-		$scope.acceptClaim = function(id, donated_by, donated_to, items){
+
+	$scope.acceptClaim = function(id, donated_by, donated_to, items){
 			var donationData = {
 				"donated_by" : donated_by,
 				"donated_to" : donated_to,

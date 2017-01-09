@@ -45,10 +45,18 @@ var loginSchema = new mongoose.Schema({
 	password: String, //hash created from password
     role: String,
 	created_at: {type: Date, default: Date.now}
-})
+});
+
+var claimSchema = new mongoose.Schema({
+	claimed_by: [ {type: Schema.Types.String, ref:'Orphanages'} ],
+	posted_by: {type: Schema.Types.String, ref:'Donors'},
+	creation_date: {type: Date, default: Date.now},
+  updation_date: {type: Date, default: Date.now}
+});
 
 mongoose.model('Donors', donorSchema);
 mongoose.model('Orphanages', orphanageSchema);
 mongoose.model('Donations', donationSchema);
 mongoose.model('Posts', postSchema);
 mongoose.model('Login', loginSchema);
+mongoose.model('Claims', claimSchema);

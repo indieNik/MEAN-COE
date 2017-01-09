@@ -26,23 +26,17 @@
             </div>
             <div class="row">
                 <div class="portfolio-item">
-                    <div class="col-md-4 col-sm-4" ng-repeat="i in postDetails" id="displayitem">
-                        
-                      <label> Donor Name : {{i.name}}</label>
-                        <div ng-repeat="j in i.items"> {{j.item}} - {{j.quantity}}</div>
+                    <div class="col-md-4 col-sm-4" ng-repeat="post in postDetails" | filter:{post.activated : true} id="displayitem">
+                      <label> Donor Name : {{post.name}}</label>
+                        <div ng-repeat="j in post.items"> {{j.item}} - {{j.quantity}}</div>
                         <div class="portfolio-caption">
- 
-                      <button type="button" class="btn btn-info btn-lg" ng-click="claimForThisPost(i.postId,i.claims)">CLAIM</button>
-                        
-                    </div>
-                    </div>
-                    
+		                      <button type="button" class="btn btn-info btn-lg" ng-click="claimForThisPost(post.postId,post.claims)">CLAIM</button>
+    		                </div>
+										</div>
                 </div>
             </div>
         </div>
     </section>
-
-
 </body>
 </html>
 

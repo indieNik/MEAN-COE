@@ -1,12 +1,9 @@
 <style>
-    #displayitem
+#displayitem
 {
-     background-color: white;
-    width: 300px;
-    height: 300px;    
+    color: white;
+		background-color: tomato;
     border: 5px solid black;
-    padding: 25px;
-    margin: 15px;
 }
 
     
@@ -41,27 +38,25 @@
                 <div class="well well col-lg-12">
 
                         <h3>Your Posts:</h3>
-
-
-                               <h6>You have {{numberOfPosts}} posts!</h6>
-                                <button type="button"  class="btn btn-info btn-sm" ng-click="viewPosts()" ng-disabled="viewPostButton">View Posts</button>
-                                <button type="button"  class="btn btn-info btn-sm" ng-click="hidePosts()" ng-disabled="hidePostButton">Hide Posts</button>
-
+												 	<h6>You have {{numberOfPosts}} posts!</h6>
+													<button type="button"  class="btn btn-info btn-sm" ng-click="viewPosts()" ng-disabled="viewPostButton">View Posts</button>
+													<button type="button"  class="btn btn-info btn-sm" ng-click="hidePosts()" ng-disabled="hidePostButton">Hide Posts</button>
                         <br/>
 
-                            <div class="col-md-4 col-sm-4" ng-repeat="post in postsOfDonor" id="displayitem" ng-show="showPosts">
-
-                                  <label> <h3>Post</h3></label>
-                                <br/>
-                                    <strong> Posted On:</strong> {{post.creation_date | date: 'dd-MM-yyyy'}}<br/>
-                                    <strong>Items:</strong>
-                                    <div ng-repeat="item in post.items"> {{item.item}} - {{item.quantity}}</div>
-                                    <strong>Expires On:</strong>{{post.expiry_date| date: 'dd-MM-yyyy'}}
-                                <br/><br/>
-                                <button type="button" class="btn btn-success btn-lg" ng-click=""> Claims</button>
-                                <button type="button" class="btn btn-info btn-sm" ng-click="deletePost(post._id)"> Delete</button>
-                                <button type="button" class="btn btn-info btn-sm" ng-click="updatePost()"> Update</button>
-                                </div>
+                            <div class="col-md-6 col-sm-12 clearfix" ng-repeat="post in postsOfDonor" id="displayitem" ng-show="showPosts">
+															<label> <h3>Post - <button class="btn btn-danger btn-sm" ng-click="deletePost(post._id)"> Delete</button></h3></label>
+															<br/>
+															<strong> Posted On:</strong> {{post.creation_date | date: 'dd-MM-yyyy'}}<br/>
+															<strong>Items:</strong>
+															<div ng-repeat="item in post.items"> {{item.item}} - {{item.quantity}}</div>
+															<strong>Expires On:</strong>{{post.expiry_date| date: 'dd-MM-yyyy'}}
+															<br />
+															<strong>{{post.claims.length}} Claims:</strong>
+															<div ng-repeat="claim in post.claims"> {{claim}} - 
+																<button class="btn btn-sm btn-success" ng-click="acceptClaim(post._id, post.posted_by, claim, post.items)">Accept Claim</button>
+															</div>
+															<br/><br/>
+														</div>
 
                         <div alert alert-warning ng-show="showPostError" style="background:#d9b3ff">
                             You have not posted Yet!

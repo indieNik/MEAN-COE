@@ -51,6 +51,7 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
     };
     
     function getPosts() {
+				console.log("Inside Get Posts");
         donationFactory.getPosts().then(function (response){
             $scope.posts = response.data;
             console.log("POST OBJECT");
@@ -69,7 +70,8 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
                 if($scope.posts[i].posted_by ==$scope.donors[j]._id){
                     $scope.postDetails.push({"name":$scope.donors[j].name,"items":$scope.posts[i].items,"quantity":$scope.posts[i].quantity,"postedBy":$scope.posts[i].posted_by,"postId":$scope.posts[i]._id,"loaction":$scope.donors[j].address.city,"claims":$scope.posts[i].claims});
                         
-                    console.log("postDetails");                        
+                    console.log("postDetails");
+										console.log($scope.postDetails);
                 }
             }
         }        
@@ -80,7 +82,7 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
     getPostsOfDonor();
     getDonors();
     getPosts();
-    $timeout($scope.getAllDetails, 150);
+    $timeout($scope.getAllDetails, 1050);
 
     $scope.viewPosts=function(){	
         
@@ -107,9 +109,11 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
         $scope.hidePostButton=true;		
     };		
     		
-    $scope.deletePost=function(id){		
-        donationFactory.deletePostById(id).then(function(response){		
-            $scope.deletedPost=response.data;	
+    $scope.deletePost=function(id){
+				console.log("ID : " + id);
+        donationFactory.deletePostById(id).then(function(response){	
+						alert("Deleted the post Successfully!");
+            $location.path("/home");
         },function(error){		
             console.log("Couldnot delete post");
             }
@@ -127,7 +131,8 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 		var postData = {
 			"posted_by" : $scope.posted_by,
 			"expiry_date" : $scope.expiry_date,
-			"items" : $scope.items
+			"items" : $scope.items,
+			"activated" : true
 		}
 		donationFactory.insertPosts(postData).then(function (response){
                 $location.path("/home");
@@ -175,5 +180,28 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 			});
         }
     };
-    
+		
+		$scope.acceptClaim = function(id, donated_by, donated_to, items){
+			var donationData = {
+				"donated_by" : donated_by,
+				"donated_to" : donated_to,
+				"donated_items": items
+			};
+			// Insert the donation into Donations Table
+			donationFactory.insertDonations(donationData).then(function (response){
+				$location.path("/home");
+				alert("Claimed Successfully!!");
+				
+				// Update the Post with 0 claims and de-activate the post
+				donationFactory.updatePosts(id,{"activated": false}).then(function(response){
+					console.log("post id: " + id);
+					$location.path("/home");
+					alert("Post De-activated!");
+				}, function(error){
+					console.log("Post couldn't be de-activated!!! :( ");
+				});
+			}, function(error){
+				console.log("Could not say yes to a Donation request! :( ");
+			});
+		};
 }]);

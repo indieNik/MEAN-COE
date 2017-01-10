@@ -104,9 +104,12 @@ router.route('/posts/:id')
     //get post by id
     .get(function(req, res){
         Post.find({"posted_by":req.params.id}, function(err, post){
-            if(err){
-                    res.send(500, err);
-                }
+					console.log("************************************************ postedBy: " + req.params.id);
+					if(err){
+						res.send(500, err);
+					}
+					console.log("Post from /posts/postedBy/: ");
+					console.log(post);
                 res.json(post);
         });    
         //return res.send({message: 'get post' + req.params.id});

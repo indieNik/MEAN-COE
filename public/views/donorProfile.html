@@ -44,7 +44,10 @@
                         <br/>
 
                             <div class="col-md-6 col-sm-12 clearfix" ng-repeat="post in postsOfDonor" id="displayitem" ng-show="showPosts">
-															<label> <h3>Post - <button class="btn btn-danger btn-sm" ng-click="deletePost(post._id)"> Delete</button></h3></label>
+															<label> <h3>
+																Post - <span class="label label-success" ng-if="post.activated">Active</span>
+																<button class="btn btn-danger btn-sm" ng-click="deletePost(post._id)"> Delete</button>
+															</h3></label>
 															<br/>
 															<strong> Posted On:</strong> {{post.creation_date | date: 'dd-MM-yyyy'}}<br/>
 															<strong>Items:</strong>
@@ -52,8 +55,10 @@
 															<strong>Expires On:</strong>{{post.expiry_date| date: 'dd-MM-yyyy'}}
 															<br />
 															<strong>{{post.claims.length}} Claims:</strong>
-															<div ng-repeat="claim in post.claims"> {{claim}} - 
-																<button class="btn btn-sm btn-success" ng-click="acceptClaim(post._id, post.posted_by, claim, post.items)">Accept Claim</button>
+															<div ng-repeat="claim in post.claims"> 
+																{{claim}} - 
+																<button ng-if="post.activated" class="btn btn-sm btn-success" ng-click="acceptClaim(post._id, post.posted_by, claim, post.items)">Accept Claim</button>
+																<span class="label label-success" ng-if="!post.activated">Claimed</span>
 															</div>
 															<br/><br/>
 														</div>

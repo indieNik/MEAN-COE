@@ -24,8 +24,8 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
     function getDonorById(){
         donationFactory.getDonorById($sessionStorage.user.current_user).then(function(response){
             $scope.donor=response.data;
-            console.log("Donor object");
-            console.log(response);
+//            console.log("Donor object");
+//            console.log(response);
           },function(error){
             console.log("Couldnot get donor data");});
     };
@@ -34,8 +34,8 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
     function getOrphanageById(){
         donationFactory.getOrphanageById($sessionStorage.user.current_user).then(function(response){
             $scope.orphanage=response.data;
-            console.log("Orphanage object");
-            console.log(response);
+//            console.log("Orphanage object");
+//            console.log(response);
           },function(error){
             console.log("Couldnot get orphanage data");});
     };
@@ -43,9 +43,10 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
      function getPostsOfDonor(){
         donationFactory.getPostsByDonorName($sessionStorage.user.current_user).then(function(response){
             $scope.postsOfDonor=response.data;
-            console.log("DonorPosts object");
-             $rootScope.numberOfPosts=Object.keys($scope.postsOfDonor).length;
-            console.log(response);
+//            console.log("DonorPosts object");
+//            console.log(response.data);
+//            console.log("Current User : " + $sessionStorage.user.current_user);
+            $rootScope.numberOfPosts=Object.keys($scope.postsOfDonor).length;
           },function(error){
             console.log("Couldnot get donorPost data");});
     };
@@ -61,28 +62,28 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
         });
     };
    
-    $scope.getAllDetails=function(){
-    $scope.postDetails=[];
-    console.log("Inside GetAll");
-        
-        for(i in $scope.posts){
-            for(j in $scope.donors){  
-                if($scope.posts[i].posted_by ==$scope.donors[j]._id){
-                    $scope.postDetails.push({"name":$scope.donors[j].name,"items":$scope.posts[i].items,"quantity":$scope.posts[i].quantity,"postedBy":$scope.posts[i].posted_by,"postId":$scope.posts[i]._id,"loaction":$scope.donors[j].address.city,"claims":$scope.posts[i].claims});
-                        
-                    console.log("postDetails");
-										console.log($scope.postDetails);
-                }
-            }
-        }        
-    };
+//    $scope.getAllDetails=function(){
+//			$scope.postDetails=[];
+//			console.log("Inside GetAll");
+//
+//					for(i in $scope.posts){
+//							for(j in $scope.donors){  
+//									if($scope.posts[i].posted_by == $scope.donors[j]._id){
+//											$scope.postDetails.push({"name":$scope.donors[j].name,"items":$scope.posts[i].items,"activated":$scope.posts[i].activated,"postedBy":$scope.posts[i].posted_by,"postId":$scope.posts[i]._id,"location":$scope.donors[j].address.city,"claims":$scope.posts[i].claims});
+//
+//											console.log("postDetails");
+//											console.log($scope.postDetails);
+//									}
+//							}
+//					}        
+//    };
     
     getDonorById();
     getOrphanageById();
     getPostsOfDonor();
     getDonors();
     getPosts();
-    $timeout($scope.getAllDetails, 1050);
+//    $timeout($scope.getAllDetails, 1050);
 
     $scope.viewPosts=function(){	
         
@@ -137,8 +138,6 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 		donationFactory.insertPosts(postData).then(function (response){
                 $location.path("/home");
                 alert("You brought smile on someone's face, THANK YOU !");
-				console.log("Inserted Item : ");
-				console.log(response.data);
         }, function(error){
 				console.log("Could Not Insert");
             }

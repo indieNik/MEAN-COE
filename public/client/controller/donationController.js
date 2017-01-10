@@ -193,13 +193,13 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 				alert("Claimed Successfully!!");
 				
 				// Update the Post with 0 claims and de-activate the post
-				donationFactory.updatePosts(id,{"activated": false}).then(function(response){
+				$timeout(donationFactory.updatePosts(id,{"activated": false}).then(function(response){
 					console.log("post id: " + id);
 					$location.path("/home");
 					alert("Post De-activated!");
 				}, function(error){
 					console.log("Post couldn't be de-activated!!! :( ");
-				});
+				}), 1000);
 			}, function(error){
 				console.log("Could not say yes to a Donation request! :( ");
 			});

@@ -37,6 +37,8 @@ easyDonations.factory('donationFactory', ['$http', function($http){
     };
 	donationFactory.updatePosts = function (id,data) {
 		// To be implemented
+		console.log("Data to be Updated : ");
+		console.log(data);
       return $http.put('/api/posts/'+id,data);
     };
     

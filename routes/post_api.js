@@ -68,7 +68,7 @@ router.route('/posts/:id')
             }
            
 		console.log("Req Body: ");
-		console.log(req);
+		console.log(req.body);
             for (var i in req.body.items) {
                 var itemObj = { item: req.body.items[i].item, quantity:req.body.items[i].quantity };
                 post.items.push(itemObj);

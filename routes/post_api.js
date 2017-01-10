@@ -67,15 +67,15 @@ router.route('/posts/:id')
                     res.send(500, err);
             }
            
-		console.log("Req Body: ");
-		console.log(req);
+// 		console.log("Req Body: ");
+// 		console.log(req);
             for (var i in req.body.items) {
                 var itemObj = { item: req.body.items[i].item, quantity:req.body.items[i].quantity };
                 post.items.push(itemObj);
             }
             post.claims.push(req.body.claims);
 // 		post.activated = false;
-            post.update(function(err, post){
+            post.save(function(err, post){
                 if(err){
                     res.send(500, err);
                 }

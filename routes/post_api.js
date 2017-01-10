@@ -71,8 +71,8 @@ router.route('/posts/:id')
 //                 var itemObj = { item: req.body.items[i].item, quantity:req.body.items[i].quantity };
 //                 post.items.push(itemObj);
 //             }
-//             post.claims.push(req.body.claims);
-		post.activated = false;
+            post.claims.push(req.body.claims);
+// 		post.activated = false;
             post.update(function(err, post){
                 if(err){
                     res.send(500, err);

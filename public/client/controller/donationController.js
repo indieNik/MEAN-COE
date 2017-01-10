@@ -196,6 +196,8 @@ easyDonations.controller('donationController',['$scope', '$http', '$sessionStora
 				$timeout(donationFactory.updatePosts(id,{"activated": false}).then(function(response){
 					console.log("post id: " + id);
 					$location.path("/home");
+					console.log("Response Object: ");
+					console.log(response);
 					alert("Post De-activated!");
 				}, function(error){
 					console.log("Post couldn't be de-activated!!! :( ");

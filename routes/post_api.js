@@ -69,16 +69,19 @@ router.route('/posts/:id')
            
 		console.log("Req Body: ");
 		console.log(req.body);
-            for (var i in req.body.items) {
-                var itemObj = { item: req.body.items[i].item, quantity:req.body.items[i].quantity };
-                post.items.push(itemObj);
-            }
-            post.claims.push(req.body.claims);
-// 		post.activated = false;
-            post.save(function(err, post){
-                if(err){
-                    res.send(500, err);
-                }
+
+		if(req.body.hasOwnProperty('claims')){
+			console.log("**********************************I have Claims!")
+			post.claims.push(req.body.claims);
+		}
+		else if(req.body.hasOwnProperty('activated')){
+			console.log("**********************************I have Activated!")
+			post.activated = false;
+		}
+		post.save(function(err, post){
+		if(err){
+				res.send(500, err);
+		}
 		console.log("Updated Post from routes/posts_api.js : ");
 		console.log(post);
                 res.json(post);                

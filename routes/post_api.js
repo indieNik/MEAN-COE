@@ -60,22 +60,25 @@ router.route('/posts/:id')
         });    
         //return res.send({message: 'get post' + req.params.id});
     })
-    //create post
+    //update post
     .put(function(req, res){
         Post.findById(req.params.id, function(err, post){
             if(err){
                     res.send(500, err);
             }
             
-            for (var i in req.body.items) {
-                var itemObj = { item: req.body.items[i].item, quantity:req.body.items[i].quantity };
-                post.items.push(itemObj);
-            }
-            post.claims.push(req.body.claims);
-            post.save(function(err, post){
+//             for (var i in req.body.items) {
+//                 var itemObj = { item: req.body.items[i].item, quantity:req.body.items[i].quantity };
+//                 post.items.push(itemObj);
+//             }
+//             post.claims.push(req.body.claims);
+		post.activated = false;
+            post.update(function(err, post){
                 if(err){
                     res.send(500, err);
                 }
+		console.log("Updated Post from routes/posts_api.js : ");
+		console.log(post);
                 res.json(post);                
             });
         });

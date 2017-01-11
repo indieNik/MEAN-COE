@@ -16,11 +16,9 @@ var authenticate = require('./routes/authenticate')(passport);
 var donation_api=require('./routes/donation_api');
 var mongoose = require('mongoose');
 
-// Connection for localhost
-// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/easyDonations', function(err){
-// Connection for heroku DB
-mongoose.connect(process.env.MONGOLAB_URI, function(err){
-    // not getting printed on console
+// Connection for Mongo DB
+   mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/easyDonations', function(err){
+// If ENV is not set, connect to localhost
     if(err){
         console.log("Mongoose Connection refused");
         throw err;
